@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { EmergencyButton } from "./EmergencyButton";
 import { AIChatInterface } from "./AIChatInterface";
 import { TrustNetwork } from "./TrustNetwork";
+import { LogoIcon } from "./LogoIcon";
 import { Shield, MessageSquare, Users, X } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 
@@ -26,6 +27,11 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
         <div className="animate-fade-in">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <LogoIcon className="h-24 w-24 drop-shadow-2xl" />
+          </div>
+          
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
             Your Invisible
             <span className="block bg-gradient-to-r from-primary-glow to-accent bg-clip-text text-transparent">

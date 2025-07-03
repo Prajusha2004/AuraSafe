@@ -1,11 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Bell, Users, MessageSquare } from "lucide-react";
+import aurasafeLogo from "@/assets/aurasafe-logo.png";
 
 export function Navigation() {
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-card/50 backdrop-blur-sm border-b">
-      <div className="flex items-center space-x-2">
-        <Shield className="h-8 w-8 text-primary" />
+      <div className="flex items-center space-x-3">
+        <img 
+          src={aurasafeLogo} 
+          alt="Aurasafe Logo" 
+          className="h-10 w-10 object-contain"
+        />
         <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
           Aurasafe
         </span>

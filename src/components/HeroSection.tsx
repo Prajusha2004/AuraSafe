@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { EmergencyButton } from "./EmergencyButton";
-import { Shield, MessageSquare, Users } from "lucide-react";
+import { AIChatInterface } from "./AIChatInterface";
+import { TrustNetwork } from "./TrustNetwork";
+import { Shield, MessageSquare, Users, X } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 
 export function HeroSection() {
+  const [showChat, setShowChat] = useState(false);
+  const [showTrustNetwork, setShowTrustNetwork] = useState(false);
+
   const handleEmergencyClick = () => {
-    // TODO: Implement emergency alert functionality
-    alert("Emergency alert activated! (This is a demo)");
+    console.log('Emergency button activated');
   };
 
   return (
@@ -34,11 +39,21 @@ export function HeroSection() {
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
-            <Button variant="hero" size="lg" className="text-lg px-8 py-6">
+            <Button 
+              onClick={() => setShowChat(true)} 
+              variant="hero" 
+              size="lg" 
+              className="text-lg px-8 py-6"
+            >
               <MessageSquare className="mr-2 h-5 w-5" />
               Talk to AI Assistant
             </Button>
-            <Button variant="navy" size="lg" className="text-lg px-8 py-6">
+            <Button 
+              onClick={() => setShowTrustNetwork(true)} 
+              variant="navy" 
+              size="lg" 
+              className="text-lg px-8 py-6"
+            >
               <Users className="mr-2 h-5 w-5" />
               Build Trust Network
             </Button>
@@ -57,13 +72,39 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 animate-slide-up delay-1000">
-        <div className="w-12 h-12 bg-primary-glow/20 rounded-full blur-sm"></div>
-      </div>
-      <div className="absolute bottom-32 right-16 animate-slide-up delay-1500">
-        <div className="w-8 h-8 bg-accent/30 rounded-full blur-sm"></div>
-      </div>
+      {/* Floating Chat Interface */}
+      {showChat && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-2xl">
+            <Button
+              onClick={() => setShowChat(false)}
+              variant="outline"
+              size="sm"
+              className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <AIChatInterface />
+          </div>
+        </div>
+      )}
+
+      {/* Floating Trust Network */}
+      {showTrustNetwork && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="relative w-full max-w-4xl">
+            <Button
+              onClick={() => setShowTrustNetwork(false)}
+              variant="outline"
+              size="sm"
+              className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <TrustNetwork />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

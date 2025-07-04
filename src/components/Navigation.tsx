@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Shield, Bell, Users, MessageSquare, X } from "lucide-react";
-import aurasafeLogo from "@/assets/aurasafe-logo-transparent.png";
+import aurasafeLogo from "@/assets/aurasafe-logo-clean.png";
 import { AlertsInterface } from "./AlertsInterface";
 import { GetStartedInterface } from "./GetStartedInterface";
 

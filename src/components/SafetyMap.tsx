@@ -1,94 +1,127 @@
 import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { Map as LeafletMap, TileLayer, Marker, Popup } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Users, AlertTriangle } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Shield, Users } from 'lucide-react';
 
-interface SafetyMapProps {
-  apiKey?: string;
-}
+// Fix for default markers in Leaflet with Vite
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import * as L from 'leaflet';
 
-export function SafetyMap({ apiKey }: SafetyMapProps) {
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+export function SafetyMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
+  const map = useRef<LeafletMap | null>(null);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
-  const [safeZones, setSafeZones] = useState<any[]>([]);
-  const [dangerZones, setDangerZones] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!mapContainer.current || !apiKey) return;
+    if (!mapContainer.current) return;
 
     // Get user location
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { longitude, latitude } = position.coords;
-        setUserLocation([longitude, latitude]);
-        initializeMap(longitude, latitude);
+        setUserLocation([latitude, longitude]); // Note: Leaflet uses [lat, lng]
+        initializeMap(latitude, longitude);
       },
       () => {
         // Default to New York if location access denied
-        setUserLocation([-74.0059, 40.7128]);
-        initializeMap(-74.0059, 40.7128);
+        setUserLocation([40.7128, -74.0059]);
+        initializeMap(40.7128, -74.0059);
       }
     );
-  }, [apiKey]);
 
-  const initializeMap = (lng: number, lat: number) => {
+    return () => {
+      if (map.current) {
+        map.current.remove();
+      }
+    };
+  }, []);
+
+  const initializeMap = (lat: number, lng: number) => {
     if (!mapContainer.current) return;
 
-    mapboxgl.accessToken = apiKey!;
-    
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
+    // Initialize map
+    map.current = new LeafletMap(mapContainer.current, {
+      center: [lat, lng],
       zoom: 14,
-      center: [lng, lat],
+      zoomControl: true,
     });
 
-    // Add navigation controls
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    // Add tile layer (OpenStreetMap)
+    new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19,
+    }).addTo(map.current);
 
-    map.current.on('load', () => {
-      // Add user location marker
-      new mapboxgl.Marker({ color: '#ff3333' })
-        .setLngLat([lng, lat])
-        .setPopup(new mapboxgl.Popup().setHTML('<h3>Your Location</h3><p>You are here</p>'))
-        .addTo(map.current!);
-
-      // Add mock safe zones
-      const mockSafeZones = [
-        { id: 1, name: 'Police Station', lng: lng + 0.01, lat: lat + 0.01 },
-        { id: 2, name: 'Hospital', lng: lng - 0.01, lat: lat + 0.005 },
-        { id: 3, name: 'Fire Station', lng: lng + 0.005, lat: lat - 0.01 },
-      ];
-
-      mockSafeZones.forEach(zone => {
-        new mapboxgl.Marker({ color: '#22c55e' })
-          .setLngLat([zone.lng, zone.lat])
-          .setPopup(new mapboxgl.Popup().setHTML(`<h3>${zone.name}</h3><p>Safe Zone</p>`))
-          .addTo(map.current!);
-      });
-
-      // Add mock danger zones
-      const mockDangerZones = [
-        { id: 1, name: 'High Crime Area', lng: lng - 0.015, lat: lat - 0.005 },
-        { id: 2, name: 'Poorly Lit Area', lng: lng + 0.02, lat: lat - 0.01 },
-      ];
-
-      mockDangerZones.forEach(zone => {
-        new mapboxgl.Marker({ color: '#f59e0b' })
-          .setLngLat([zone.lng, zone.lat])
-          .setPopup(new mapboxgl.Popup().setHTML(`<h3>${zone.name}</h3><p>Exercise Caution</p>`))
-          .addTo(map.current!);
-      });
+    // Custom icons for different marker types
+    const userIcon = new L.Icon({
+      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz4KPC9zdmc+',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -12],
     });
+
+    const safeIcon = new L.Icon({
+      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjMjJjNTVlIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4=',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -12],
+    });
+
+    const warningIcon = new L.Icon({
+      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDlWMTNNMjEgMTJDMjEgMTYuOTcwNiAxNi45NzA2IDIxIDEyIDIxQzcuMDI5NDQgMjEgMyAxNi45NzA2IDMgMTJDMyA3LjAyOTQ0IDcuMDI5NDQgMyAxMiAzQzE2Ljk3MDYgMyAyMSA3LjAyOTQ0IDIxIDEyWk0xMi4wMSAxN0gxMlYxN0gxMi4wMVoiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9IiNmNTllMGIiLz4KPC9zdmc+',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -12],
+    });
+
+    // Add user location marker
+    new Marker([lat, lng], { icon: userIcon })
+      .addTo(map.current)
+      .bindPopup('<h3>Your Location</h3><p>You are here</p>');
+
+    // Add mock safe zones
+    const mockSafeZones = [
+      { id: 1, name: 'Police Station', lat: lat + 0.01, lng: lng + 0.01 },
+      { id: 2, name: 'Hospital', lat: lat + 0.005, lng: lng - 0.01 },
+      { id: 3, name: 'Fire Station', lat: lat - 0.01, lng: lng + 0.005 },
+    ];
+
+    mockSafeZones.forEach(zone => {
+      new Marker([zone.lat, zone.lng], { icon: safeIcon })
+        .addTo(map.current!)
+        .bindPopup(`<h3>${zone.name}</h3><p>Safe Zone</p>`);
+    });
+
+    // Add mock danger zones
+    const mockDangerZones = [
+      { id: 1, name: 'High Crime Area', lat: lat - 0.005, lng: lng - 0.015 },
+      { id: 2, name: 'Poorly Lit Area', lat: lat - 0.01, lng: lng + 0.02 },
+    ];
+
+    mockDangerZones.forEach(zone => {
+      new Marker([zone.lat, zone.lng], { icon: warningIcon })
+        .addTo(map.current!)
+        .bindPopup(`<h3>${zone.name}</h3><p>Exercise Caution</p>`);
+    });
+
+    setIsLoading(false);
   };
 
   const shareLocation = () => {
     if (userLocation) {
-      const locationUrl = `https://maps.google.com/?q=${userLocation[1]},${userLocation[0]}`;
+      const locationUrl = `https://maps.google.com/?q=${userLocation[0]},${userLocation[1]}`;
       navigator.share?.({
         title: 'My current location - Aurasafe',
         text: 'Sharing my location for safety',
@@ -97,15 +130,12 @@ export function SafetyMap({ apiKey }: SafetyMapProps) {
     }
   };
 
-  if (!apiKey) {
+  if (isLoading) {
     return (
       <Card className="w-full h-96 flex items-center justify-center">
         <CardContent className="text-center">
-          <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-muted-foreground">Map requires Mapbox API key</p>
-          <p className="text-sm text-muted-foreground mt-2">
-            Get your free token at mapbox.com
-          </p>
+          <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4 animate-pulse" />
+          <p className="text-muted-foreground">Loading map...</p>
         </CardContent>
       </Card>
     );

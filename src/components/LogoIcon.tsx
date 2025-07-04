@@ -1,4 +1,4 @@
-import aurasafeLogo from "@/assets/aurasafe-logo.png";
+import aurasafeLogo from "@/assets/aurasafe-logo-transparent.png";
 
 export function LogoIcon({ className = "h-8 w-8" }: { className?: string }) {
   return (

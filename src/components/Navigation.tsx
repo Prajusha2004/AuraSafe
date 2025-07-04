@@ -1,9 +1,17 @@
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Shield, Bell, Users, MessageSquare } from "lucide-react";
-import aurasafeLogo from "@/assets/aurasafe-logo.png";
+import { Shield, Bell, Users, MessageSquare, X } from "lucide-react";
+import aurasafeLogo from "@/assets/aurasafe-logo-transparent.png";
+import { AlertsInterface } from "./AlertsInterface";
+import { GetStartedInterface } from "./GetStartedInterface";
 
 export function Navigation() {
+  const [showAlerts, setShowAlerts] = useState(false);
+  const [showGetStarted, setShowGetStarted] = useState(false);
+
   return (
+    <>
+      {/* Navigation Bar */}
     <nav className="flex items-center justify-between px-6 py-4 bg-card/50 backdrop-blur-sm border-b">
       <div className="flex items-center space-x-3">
         <img 
@@ -32,14 +40,57 @@ export function Navigation() {
       </div>
 
       <div className="flex items-center space-x-3">
-        <Button variant="outline" size="sm">
+        <Button 
+          onClick={() => setShowAlerts(true)} 
+          variant="outline" 
+          size="sm"
+        >
           <Bell className="h-4 w-4 mr-2" />
           Alerts
         </Button>
-        <Button variant="hero" size="sm">
+        <Button 
+          onClick={() => setShowGetStarted(true)} 
+          variant="hero" 
+          size="sm"
+        >
           Get Started
         </Button>
       </div>
     </nav>
+
+      {/* Alerts Modal */}
+      {showAlerts && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-2xl">
+            <Button
+              onClick={() => setShowAlerts(false)}
+              variant="outline"
+              size="sm"
+              className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <AlertsInterface />
+          </div>
+        </div>
+      )}
+
+      {/* Get Started Modal */}
+      {showGetStarted && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="relative w-full max-w-2xl">
+            <Button
+              onClick={() => setShowGetStarted(false)}
+              variant="outline"
+              size="sm"
+              className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <GetStartedInterface />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

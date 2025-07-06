@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Map as LeafletMap, TileLayer, Marker, Popup } from 'leaflet';
+import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,7 +9,6 @@ import { Shield, Users } from 'lucide-react';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import * as L from 'leaflet';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -20,7 +19,7 @@ L.Icon.Default.mergeOptions({
 
 export function SafetyMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<LeafletMap | null>(null);
+  const map = useRef<L.Map | null>(null);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,14 +51,14 @@ export function SafetyMap() {
     if (!mapContainer.current) return;
 
     // Initialize map
-    map.current = new LeafletMap(mapContainer.current, {
+    map.current = L.map(mapContainer.current, {
       center: [lat, lng],
       zoom: 14,
       zoomControl: true,
     });
 
     // Add tile layer (OpenStreetMap)
-    new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
       maxZoom: 19,
     }).addTo(map.current);
@@ -87,7 +86,7 @@ export function SafetyMap() {
     });
 
     // Add user location marker
-    new Marker([lat, lng], { icon: userIcon })
+    L.marker([lat, lng], { icon: userIcon })
       .addTo(map.current)
       .bindPopup('<h3>Your Location</h3><p>You are here</p>');
 
@@ -99,7 +98,7 @@ export function SafetyMap() {
     ];
 
     mockSafeZones.forEach(zone => {
-      new Marker([zone.lat, zone.lng], { icon: safeIcon })
+      L.marker([zone.lat, zone.lng], { icon: safeIcon })
         .addTo(map.current!)
         .bindPopup(`<h3>${zone.name}</h3><p>Safe Zone</p>`);
     });
@@ -111,7 +110,7 @@ export function SafetyMap() {
     ];
 
     mockDangerZones.forEach(zone => {
-      new Marker([zone.lat, zone.lng], { icon: warningIcon })
+      L.marker([zone.lat, zone.lng], { icon: warningIcon })
         .addTo(map.current!)
         .bindPopup(`<h3>${zone.name}</h3><p>Exercise Caution</p>`);
     });

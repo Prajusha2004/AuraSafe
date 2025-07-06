@@ -1,9 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download } from 'lucide-react';
-import aurasafeLogoClean from "@/assets/aurasafe-logo-clean.png";
-import aurasafeLogoTransparent from "@/assets/aurasafe-logo-transparent.png";
-import aurasafeLogo from "@/assets/aurasafe-logo.png";
 
 export function LogoDownload() {
   const downloadLogo = (logoUrl: string, filename: string) => {
@@ -15,22 +12,10 @@ export function LogoDownload() {
 
   const logos = [
     {
-      name: 'Clean Logo',
-      url: aurasafeLogoClean,
-      filename: 'aurasafe-logo-clean.png',
-      description: 'Logo with transparent background'
-    },
-    {
-      name: 'Transparent Logo',
-      url: aurasafeLogoTransparent,
-      filename: 'aurasafe-logo-transparent.png',
-      description: 'Processed transparent logo'
-    },
-    {
-      name: 'Original Logo',
-      url: aurasafeLogo,
+      name: 'Aurasafe Logo',
+      url: '/lovable-uploads/240b819f-9de3-46d8-94a8-23b66962c3af.png',
       filename: 'aurasafe-logo.png',
-      description: 'Original logo with background'
+      description: 'Current Aurasafe logo'
     }
   ];
 

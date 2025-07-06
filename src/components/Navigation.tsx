@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Shield, Bell, Users, MessageSquare, X } from "lucide-react";
-import aurasafeLogo from "@/assets/aurasafe-logo-clean.png";
+
 import { AlertsInterface } from "./AlertsInterface";
 import { GetStartedInterface } from "./GetStartedInterface";
 
@@ -15,7 +15,7 @@ export function Navigation() {
     <nav className="flex items-center justify-between px-6 py-4 bg-card/50 backdrop-blur-sm border-b">
       <div className="flex items-center space-x-3">
         <img 
-          src={aurasafeLogo} 
+          src="/lovable-uploads/240b819f-9de3-46d8-94a8-23b66962c3af.png" 
           alt="Aurasafe Logo" 
           className="h-10 w-10 object-contain"
         />

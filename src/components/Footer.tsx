@@ -2,7 +2,7 @@ import { LogoIcon } from "@/components/LogoIcon";
 
 export function Footer() {
   return (
-    <footer className="bg-card border-t py-12">
+    <footer id="contact" className="bg-card border-t py-12">
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo & Description */}

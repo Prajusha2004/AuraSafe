@@ -25,16 +25,16 @@ export function Navigation() {
       </div>
       
       <div className="hidden md:flex items-center space-x-6">
-        <a href="#features" className="text-foreground hover:text-primary transition-colors">
+        <a href="#features" className="text-foreground hover:text-primary transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }); }}>
           Features
         </a>
-        <a href="#safety" className="text-foreground hover:text-primary transition-colors">
+        <a href="#safety" className="text-foreground hover:text-primary transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('safety')?.scrollIntoView({ behavior: 'smooth' }); }}>
           Safety Tools
         </a>
-        <a href="#community" className="text-foreground hover:text-primary transition-colors">
+        <a href="#community" className="text-foreground hover:text-primary transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('community')?.scrollIntoView({ behavior: 'smooth' }); }}>
           Community
         </a>
-        <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+        <a href="#contact" className="text-foreground hover:text-primary transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>
           Contact
         </a>
       </div>

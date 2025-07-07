@@ -2,14 +2,24 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, BellPlus, MessageSquare, X, MapPin, Route, CheckCircle } from "lucide-react";
+import { Shield, Users, BellPlus, MessageSquare, X, MapPin, Route, CheckCircle, Phone, Mic, BarChart3, AlertTriangle } from "lucide-react";
 import { AIChatInterface } from "./AIChatInterface";
 import { EmergencyButton } from "./EmergencyButton";
+import { FakeCallInterface } from "./FakeCallInterface";
+import { VoiceCommandInterface } from "./VoiceCommandInterface";
+import { PersonalRiskScore } from "./PersonalRiskScore";
+import { CommunityFeed } from "./CommunityFeed";
+import { IncidentReporting } from "./IncidentReporting";
 import { useToast } from "@/hooks/use-toast";
 
 export function SafetyDashboard() {
   const [showAIChat, setShowAIChat] = useState(false);
   const [showEmergency, setShowEmergency] = useState(false);
+  const [showFakeCall, setShowFakeCall] = useState(false);
+  const [showVoiceCommands, setShowVoiceCommands] = useState(false);
+  const [showRiskScore, setShowRiskScore] = useState(false);
+  const [showCommunityFeed, setShowCommunityFeed] = useState(false);
+  const [showIncidentReport, setShowIncidentReport] = useState(false);
   const { toast } = useToast();
 
   const shareLocation = () => {
@@ -210,21 +220,54 @@ export function SafetyDashboard() {
                   </Button>
                 </div>
               </div>
+
+              <div className="animate-slide-up">
+                <h3 className="text-2xl font-semibold mb-4">Advanced Features</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <Button 
+                    variant="outline" 
+                    className="h-12"
+                    onClick={() => setShowFakeCall(true)}
+                  >
+                    <Phone className="h-4 w-4 mr-2" />
+                    Fake Call
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-12"
+                    onClick={() => setShowVoiceCommands(true)}
+                  >
+                    <Mic className="h-4 w-4 mr-2" />
+                    Voice Commands
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-12"
+                    onClick={() => setShowRiskScore(true)}
+                  >
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Risk Score
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-12"
+                    onClick={() => setShowIncidentReport(true)}
+                  >
+                    <AlertTriangle className="h-4 w-4 mr-2" />
+                    Report Incident
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* AI Chat Modal */}
+      {/* All Feature Modals */}
       {showAIChat && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="relative w-full max-w-2xl">
-            <Button
-              onClick={() => setShowAIChat(false)}
-              variant="outline"
-              size="sm"
-              className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm"
-            >
+            <Button onClick={() => setShowAIChat(false)} variant="outline" size="sm" className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm">
               <X className="h-4 w-4" />
             </Button>
             <AIChatInterface />
@@ -232,29 +275,70 @@ export function SafetyDashboard() {
         </div>
       )}
 
-      {/* Emergency Modal */}
       {showEmergency && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="relative">
-            <Button
-              onClick={() => setShowEmergency(false)}
-              variant="outline"
-              size="sm"
-              className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm"
-            >
+            <Button onClick={() => setShowEmergency(false)} variant="outline" size="sm" className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm">
               <X className="h-4 w-4" />
             </Button>
             <Card className="w-full max-w-md p-8 text-center">
               <CardHeader>
                 <CardTitle className="text-red-500 mb-4">Emergency SOS</CardTitle>
-                <CardDescription>
-                  Press and hold the button below to activate emergency protocols
-                </CardDescription>
+                <CardDescription>Press and hold the button below to activate emergency protocols</CardDescription>
               </CardHeader>
               <CardContent className="flex justify-center">
                 <EmergencyButton onClick={() => setShowEmergency(false)} />
               </CardContent>
             </Card>
+          </div>
+        </div>
+      )}
+
+      {showFakeCall && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-md">
+            <Button onClick={() => setShowFakeCall(false)} variant="outline" size="sm" className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm">
+              <X className="h-4 w-4" />
+            </Button>
+            <FakeCallInterface onClose={() => setShowFakeCall(false)} />
+          </div>
+        </div>
+      )}
+
+      {showVoiceCommands && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-md">
+            <Button onClick={() => setShowVoiceCommands(false)} variant="outline" size="sm" className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm">
+              <X className="h-4 w-4" />
+            </Button>
+            <VoiceCommandInterface 
+              onEmergency={() => setShowEmergency(true)}
+              onFakeCall={() => setShowFakeCall(true)}
+              onShareLocation={shareLocation}
+              onSafeRoute={getSafeRoute}
+            />
+          </div>
+        </div>
+      )}
+
+      {showRiskScore && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-md">
+            <Button onClick={() => setShowRiskScore(false)} variant="outline" size="sm" className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm">
+              <X className="h-4 w-4" />
+            </Button>
+            <PersonalRiskScore />
+          </div>
+        </div>
+      )}
+
+      {showIncidentReport && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="relative w-full max-w-2xl">
+            <Button onClick={() => setShowIncidentReport(false)} variant="outline" size="sm" className="absolute -top-12 right-0 bg-card/90 backdrop-blur-sm">
+              <X className="h-4 w-4" />
+            </Button>
+            <IncidentReporting />
           </div>
         </div>
       )}

@@ -1,73 +1,147 @@
-# Welcome to your Lovable project
+# AuraSafe - AI-Powered Personal Safety Platform
 
-## Project info
+AuraSafe is a comprehensive personal safety application that leverages AI technology to provide real-time protection, emergency assistance, and community-driven safety features. Built for individuals who prioritize their safety and want to stay connected with their trusted network.
 
-**URL**: https://lovable.dev/projects/3291fdf3-e9fd-411b-8266-b7184449ee39
+## 🌟 Features
 
-## How can I edit this code?
+### Core Safety Features
+- **Emergency SOS Button** - Instant emergency alert with 5-second countdown
+- **Real-time Location Sharing** - Share your location with trusted contacts
+- **Safe Route Finder** - AI-powered route planning avoiding dangerous areas
+- **Trust Network Management** - Build and manage your safety circle
+- **Quick Check-in** - Regular safety status updates
 
-There are several ways of editing your application.
+### Advanced AI Features
+- **AI Safety Assistant** - Intelligent chatbot for safety advice and support
+- **Voice Command Integration** - Hands-free safety activation ("Hey Aura, I feel unsafe")
+- **Personal Risk Score** - Dynamic safety assessment based on location and behavior
+- **Behavioral Pattern Recognition** - Detects unusual patterns and proactively checks on user
 
-**Use Lovable**
+### Community & Reporting
+- **Community Safety Feed** - Real-time safety updates from local community
+- **Incident Reporting** - Report and document safety incidents with evidence
+- **Anonymous Posting** - Share safety concerns without revealing identity
+- **Real-time Alerts** - Instant notifications about nearby safety threats
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3291fdf3-e9fd-411b-8266-b7184449ee39) and start prompting.
+### Emergency Tools
+- **Fake Call Feature** - Escape dangerous situations with realistic fake calls
+- **Customizable Exit Strategies** - Pre-configured escape plans
+- **Evidence Collection** - Auto-capture audio, photos during emergencies
+- **Multi-contact Emergency Alerts** - Notify multiple trusted contacts simultaneously
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠 Technology Stack
 
-**Use your preferred IDE**
+- **Frontend**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with custom design system
+- **UI Components**: Shadcn/ui
+- **Build Tool**: Vite
+- **Icons**: Lucide React
+- **Maps**: Leaflet with OpenStreetMap
+- **Voice Recognition**: Web Speech API
+- **State Management**: React Hooks
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn package manager
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd aurasafe
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
+```bash
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📱 Mobile Development
 
-## What technologies are used for this project?
+AuraSafe supports mobile development through Capacitor integration:
 
-This project is built with:
+1. Install Capacitor dependencies:
+```bash
+npm install @capacitor/core @capacitor/cli @capacitor/ios @capacitor/android
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+2. Initialize Capacitor:
+```bash
+npx cap init
+```
 
-## How can I deploy this project?
+3. Add platforms:
+```bash
+npx cap add ios
+npx cap add android
+```
 
-Simply open [Lovable](https://lovable.dev/projects/3291fdf3-e9fd-411b-8266-b7184449ee39) and click on Share -> Publish.
+4. Build and sync:
+```bash
+npm run build
+npx cap sync
+```
 
-## Can I connect a custom domain to my Lovable project?
+5. Run on device:
+```bash
+npx cap run ios
+npx cap run android
+```
 
-Yes, you can!
+## 🎨 Design System
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+AuraSafe uses a custom design system built with Tailwind CSS:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- **Colors**: HSL-based semantic color tokens
+- **Typography**: Responsive font scales
+- **Components**: Reusable UI components with variants
+- **Animations**: Smooth transitions and micro-interactions
+- **Dark/Light Mode**: Full theme support
+
+## 🔒 Privacy & Security
+
+- All location data is processed locally when possible
+- Emergency contacts are stored securely
+- Anonymous reporting options available
+- No personal data shared without explicit consent
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Emergency Disclaimer
+
+AuraSafe is designed to assist with personal safety but should not replace official emergency services. In case of immediate danger, always call your local emergency number (911, 112, etc.) first.
+
+## 📞 Support
+
+For support and questions, please contact [support@aurasafe.com](mailto:support@aurasafe.com)
+
+---
+
+Built with ❤️ for safer communities worldwide.

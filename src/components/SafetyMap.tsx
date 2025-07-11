@@ -1,9 +1,10 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Users } from 'lucide-react';
+import { Shield, Users, MapPin } from 'lucide-react';
 
 // Fix for default markers in Leaflet with Vite
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -22,112 +23,199 @@ export function SafetyMap() {
   const map = useRef<L.Map | null>(null);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Get user location
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { longitude, latitude } = position.coords;
-        setUserLocation([latitude, longitude]); // Note: Leaflet uses [lat, lng]
-        initializeMap(latitude, longitude);
-      },
-      () => {
-        // Default to New York if location access denied
-        setUserLocation([40.7128, -74.0059]);
-        initializeMap(40.7128, -74.0059);
-      }
-    );
+    // Add a small delay to ensure the container is properly rendered
+    const timer = setTimeout(() => {
+      initializeLocation();
+    }, 100);
 
     return () => {
+      clearTimeout(timer);
       if (map.current) {
         map.current.remove();
+        map.current = null;
       }
     };
   }, []);
 
+  const initializeLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { longitude, latitude } = position.coords;
+          console.log('User location obtained:', latitude, longitude);
+          setUserLocation([latitude, longitude]);
+          initializeMap(latitude, longitude);
+        },
+        (error) => {
+          console.warn('Geolocation error:', error);
+          // Default to New York if location access denied
+          console.log('Using default location: New York');
+          setUserLocation([40.7128, -74.0059]);
+          initializeMap(40.7128, -74.0059);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 60000
+        }
+      );
+    } else {
+      console.warn('Geolocation not supported');
+      setUserLocation([40.7128, -74.0059]);
+      initializeMap(40.7128, -74.0059);
+    }
+  };
+
   const initializeMap = (lat: number, lng: number) => {
-    if (!mapContainer.current) return;
+    try {
+      if (!mapContainer.current) {
+        console.error('Map container not found');
+        setError('Map container not available');
+        setIsLoading(false);
+        return;
+      }
 
-    // Initialize map
-    map.current = L.map(mapContainer.current, {
-      center: [lat, lng],
-      zoom: 14,
-      zoomControl: true,
-    });
+      console.log('Initializing map at:', lat, lng);
 
-    // Add tile layer (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 19,
-    }).addTo(map.current);
+      // Initialize map
+      map.current = L.map(mapContainer.current, {
+        center: [lat, lng],
+        zoom: 14,
+        zoomControl: true,
+        attributionControl: true,
+      });
 
-    // Custom icons for different marker types
-    const userIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz4KPC9zdmc+',
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [0, -12],
-    });
+      // Add tile layer (OpenStreetMap)
+      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+      });
 
-    const safeIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjMjJjNTVlIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4=',
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [0, -12],
-    });
+      tileLayer.addTo(map.current);
 
-    const warningIcon = new L.Icon({
-      iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDlWMTNNMjEgMTJDMjEgMTYuOTcwNiAxNi45NzA2IDIxIDEyIDIxQzcuMDI5NDQgMjEgMyAxNi45NzA2IDMgMTJDMyA3LjAyOTQ0IDcuMDI5NDQgMyAxMiAzQzE2Ljk3MDYgMyAyMSA3LjAyOTQ0IDIxIDEyWk0xMi4wMSAxN0gxMlYxN0gxMi4wMVoiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9IiNmNTllMGIiLz4KPC9zdmc+',
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [0, -12],
-    });
+      // Handle tile loading events
+      tileLayer.on('loading', () => {
+        console.log('Tiles loading...');
+      });
 
-    // Add user location marker
-    L.marker([lat, lng], { icon: userIcon })
-      .addTo(map.current)
-      .bindPopup('<h3>Your Location</h3><p>You are here</p>');
+      tileLayer.on('load', () => {
+        console.log('Tiles loaded successfully');
+        setIsLoading(false);
+        setError(null);
+      });
 
-    // Add mock safe zones
-    const mockSafeZones = [
-      { id: 1, name: 'Police Station', lat: lat + 0.01, lng: lng + 0.01 },
-      { id: 2, name: 'Hospital', lat: lat + 0.005, lng: lng - 0.01 },
-      { id: 3, name: 'Fire Station', lat: lat - 0.01, lng: lng + 0.005 },
-    ];
+      tileLayer.on('tileerror', (e) => {
+        console.error('Tile loading error:', e);
+        setError('Failed to load map tiles');
+        setIsLoading(false);
+      });
 
-    mockSafeZones.forEach(zone => {
-      L.marker([zone.lat, zone.lng], { icon: safeIcon })
-        .addTo(map.current!)
-        .bindPopup(`<h3>${zone.name}</h3><p>Safe Zone</p>`);
-    });
+      // Create custom icons
+      const createCustomIcon = (color: string, symbol: string) => {
+        return L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">${symbol}</div>`,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12],
+        });
+      };
 
-    // Add mock danger zones
-    const mockDangerZones = [
-      { id: 1, name: 'High Crime Area', lat: lat - 0.005, lng: lng - 0.015 },
-      { id: 2, name: 'Poorly Lit Area', lat: lat - 0.01, lng: lng + 0.02 },
-    ];
+      const userIcon = createCustomIcon('#ef4444', '●');
+      const safeIcon = createCustomIcon('#22c55e', '✓');
+      const warningIcon = createCustomIcon('#f59e0b', '!');
 
-    mockDangerZones.forEach(zone => {
-      L.marker([zone.lat, zone.lng], { icon: warningIcon })
-        .addTo(map.current!)
-        .bindPopup(`<h3>${zone.name}</h3><p>Exercise Caution</p>`);
-    });
+      // Add user location marker
+      L.marker([lat, lng], { icon: userIcon })
+        .addTo(map.current)
+        .bindPopup('<strong>Your Location</strong><br>You are here');
 
-    setIsLoading(false);
+      // Add mock safe zones
+      const mockSafeZones = [
+        { id: 1, name: 'Police Station', lat: lat + 0.01, lng: lng + 0.01 },
+        { id: 2, name: 'Hospital', lat: lat + 0.005, lng: lng - 0.01 },
+        { id: 3, name: 'Fire Station', lat: lat - 0.01, lng: lng + 0.005 },
+      ];
+
+      mockSafeZones.forEach(zone => {
+        L.marker([zone.lat, zone.lng], { icon: safeIcon })
+          .addTo(map.current!)
+          .bindPopup(`<strong>${zone.name}</strong><br>Safe Zone`);
+      });
+
+      // Add mock danger zones
+      const mockDangerZones = [
+        { id: 1, name: 'High Crime Area', lat: lat - 0.005, lng: lng - 0.015 },
+        { id: 2, name: 'Poorly Lit Area', lat: lat - 0.01, lng: lng + 0.02 },
+      ];
+
+      mockDangerZones.forEach(zone => {
+        L.marker([zone.lat, zone.lng], { icon: warningIcon })
+          .addTo(map.current!)
+          .bindPopup(`<strong>${zone.name}</strong><br>Exercise Caution`);
+      });
+
+      // Force map to resize after initialization
+      setTimeout(() => {
+        if (map.current) {
+          map.current.invalidateSize();
+          console.log('Map size invalidated');
+        }
+      }, 200);
+
+    } catch (error) {
+      console.error('Error initializing map:', error);
+      setError('Failed to initialize map');
+      setIsLoading(false);
+    }
   };
 
   const shareLocation = () => {
     if (userLocation) {
       const locationUrl = `https://maps.google.com/?q=${userLocation[0]},${userLocation[1]}`;
-      navigator.share?.({
-        title: 'My current location - Aurasafe',
-        text: 'Sharing my location for safety',
-        url: locationUrl
-      }) || navigator.clipboard.writeText(locationUrl);
+      if (navigator.share) {
+        navigator.share({
+          title: 'My current location - Aurasafe',
+          text: 'Sharing my location for safety',
+          url: locationUrl
+        }).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(locationUrl).then(() => {
+          console.log('Location copied to clipboard');
+        }).catch(() => {
+          console.log('Failed to copy to clipboard');
+        });
+      }
     }
   };
+
+  if (error) {
+    return (
+      <Card className="w-full h-96 flex items-center justify-center">
+        <CardContent className="text-center">
+          <MapPin className="h-12 w-12 text-destructive mx-auto mb-4" />
+          <p className="text-destructive mb-2">Map Error</p>
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <Button 
+            onClick={() => {
+              setError(null);
+              setIsLoading(true);
+              initializeLocation();
+            }}
+            variant="outline"
+            size="sm"
+            className="mt-4"
+          >
+            Retry
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -160,15 +248,15 @@ export function SafetyMap() {
       {/* Legend */}
       <div className="absolute bottom-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg p-3 space-y-2">
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-3 h-3 bg-primary rounded-full"></div>
+          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
           <span>Your Location</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-3 h-3 bg-safe rounded-full"></div>
+          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           <span>Safe Zones</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-3 h-3 bg-warning rounded-full"></div>
+          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
           <span>Caution Areas</span>
         </div>
       </div>

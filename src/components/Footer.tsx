@@ -35,16 +35,19 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Emergency</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Emergency: 911</li>
-              <li>Crisis Text Line: 741741</li>
-              <li>National Domestic Violence: 1-800-799-7233</li>
-              <li>RAINN Hotline: 1-800-656-4673</li>
+              <li>Women In Distress 1091</li>
+              <li>Women Helpline Domestic Abuse 181</li>
+              <li>Police  112 / 100</li>
+              <li>National Commison For Women (NCW) ( Domestic voilence 24x7 helpline for Sexual Voilence and harrashment ) 7827170170 </li>
+              <li>Delhi Commision For Women 011- 23379181  ( 10am to 5.30 pm )</li>
+              <li>Student / Child Helpline 1098</li>
+National Human Right Commision 011-23385368/9810298900 
             </ul>
           </div>
         </div>
 
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 Aurasafe. Protecting women through AI innovation.</p>
+          <p>&copy; 2025 Aurasafe. Protecting women through AI innovation.</p>
         </div>
       </div>
     </footer>

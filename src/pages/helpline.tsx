@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface HelplineEntry {
   state: string;
-  contacts: string[];
+  contacts: { number: string; description: string }[];
 }
 
 export default function Helpline() {
@@ -10,94 +11,199 @@ export default function Helpline() {
 
   const helplineData: HelplineEntry[] = [
     {
-      state: "Delhi",
-      contacts: [
-        "Delhi Commission for Women: 011-23379181",
-        "Delhi Women Protection Cell: 011-24673366 / 4156 / 7699",
-        "Shakti Shalini (NGO): 011-24373737, 011-24373736, 10920",
-        "Sakshi - Violence Intervention Center: (0124) 2562336 / 5018873"
-      ]
-    },
-    {
       state: "Andhra Pradesh",
       contacts: [
-        "Hyderabad/Secundrabad Police station: 040-27853508",
-        "Women Protection Cell: 040-23320539",
-        "Women Commission: 0863-2329090",
-        "Hyderabad Women Police Station: 040-27852400 / 4852"
+        { number: "181", description: "24x7 Women Helpline" },
+        { number: "0863-2329090", description: "State Women Commission" }
       ]
     },
     {
-      state: "Maharashtra",
+      state: "Arunachal Pradesh",
       contacts: [
-        "Mumbai Women Police Station: 022-22621855",
-        "State Commission for Women: 022-22031152",
-        "Aastha Parivaar Helpline: 18002000445",
-        "Navi Mumbai Women Police Station: 022-27572229"
+        { number: "0360-2214745", description: "Women Police Helpline" }
       ]
     },
     {
-      state: "Tamil Nadu",
+      state: "Assam",
       contacts: [
-        "Chennai Women Helpline: 1091",
-        "Women Help Desk (Police): 044-23452365",
-        "Tamil Nadu State Commission for Women: 044-28270194"
-      ]
-    },
-    {
-      state: "Karnataka",
-      contacts: [
-        "Bangalore Women Police Station: 080-22943225",
-        "Karnataka State Commission for Women: 080-22392223",
-        "Vanitha Sahayavani Helpline: 080-22943225"
-      ]
-    },
-    {
-      state: "West Bengal",
-      contacts: [
-        "Kolkata Women Police: 033-22143230",
-        "West Bengal Commission for Women: 033-23345255",
-        "Kolkata Helpline: 1091 / 100"
-      ]
-    },
-    {
-      state: "Rajasthan",
-      contacts: [
-        "Jaipur Women Police Station: 0141-2560197",
-        "Rajasthan State Women Commission: 0141-2740637",
-        "Emergency Helpline: 1091"
-      ]
-    },
-    {
-      state: "Uttar Pradesh",
-      contacts: [
-        "Women Power Line: 1090",
-        "Lucknow Women Police Station: 0522-2617924",
-        "State Women Commission: 0522-2236496"
-      ]
-    },
-    {
-      state: "Kerala",
-      contacts: [
-        "Thiruvananthapuram Women Police Station: 0471-2338100",
-        "Vanitha Cell: 0471-2444444",
-        "State Women Commission: 0471-2322590"
-      ]
-    },
-    {
-      state: "Jharkhand",
-      contacts: [
-        "Ranchi Women Police Station: 0651-2214007",
-        "State Women Commission: 0651-2446075",
-        "Women Helpline: 181"
+        { number: "181", description: "24x7 Women Helpline" },
+        { number: "0361-2600060", description: "Women Commission" }
       ]
     },
     {
       state: "Bihar",
       contacts: [
-        "Patna Women Police Station: 0612-2201977",
-        "State Women Commission: 0612-2507870",
-        "Women Helpline: 181"
+        { number: "181", description: "24x7 Women Helpline" },
+        { number: "0612-2507870", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Chhattisgarh",
+      contacts: [
+        { number: "181", description: "Women Helpline" },
+        { number: "0771-2511515", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Goa",
+      contacts: [
+        { number: "1091", description: "Police Helpline" },
+        { number: "0832-2425100", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Gujarat",
+      contacts: [
+        { number: "1091", description: "Police Helpline" },
+        { number: "079-23251604", description: "State Women Commission" }
+      ]
+    },
+    {
+      state: "Haryana",
+      contacts: [
+        { number: "1091", description: "Police Helpline" },
+        { number: "0172-2587900", description: "State Women Commission" }
+      ]
+    },
+    {
+      state: "Himachal Pradesh",
+      contacts: [
+        { number: "1091", description: "Women Helpline" },
+        { number: "0177-2626487", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Jharkhand",
+      contacts: [
+        { number: "181", description: "Women Helpline" },
+        { number: "0651-2446075", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Karnataka",
+      contacts: [
+        { number: "080-22943225", description: "Women Helpline" },
+        { number: "080-22392223", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Kerala",
+      contacts: [
+        { number: "181", description: "Women Helpline" },
+        { number: "0471-2338100", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Madhya Pradesh",
+      contacts: [
+        { number: "181", description: "Women Helpline" },
+        { number: "0755-2550900", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Maharashtra",
+      contacts: [
+        { number: "18002000445", description: "Women Helpline" },
+        { number: "022-22621855", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Manipur",
+      contacts: [
+        { number: "0385-2450008", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "Meghalaya",
+      contacts: [
+        { number: "0364-2503661", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "Mizoram",
+      contacts: [
+        { number: "0389-2336848", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "Nagaland",
+      contacts: [
+        { number: "0370-2244326", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "Odisha",
+      contacts: [
+        { number: "181", description: "Women Helpline" },
+        { number: "0674-2598200", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Punjab",
+      contacts: [
+        { number: "1091", description: "Police Helpline" },
+        { number: "0172-2740678", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Rajasthan",
+      contacts: [
+        { number: "1091", description: "Women Helpline" },
+        { number: "0141-2740637", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Sikkim",
+      contacts: [
+        { number: "03592-202890", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "Tamil Nadu",
+      contacts: [
+        { number: "1091", description: "Police Helpline" },
+        { number: "044-28270194", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Telangana",
+      contacts: [
+        { number: "040-27853508", description: "Women Helpline" },
+        { number: "1091", description: "Police Helpline" }
+      ]
+    },
+    {
+      state: "Tripura",
+      contacts: [
+        { number: "0381-2323423", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "Uttar Pradesh",
+      contacts: [
+        { number: "1090", description: "Women Helpline" },
+        { number: "0522-2617924", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Uttarakhand",
+      contacts: [
+        { number: "0135-2700969", description: "Women Helpline" }
+      ]
+    },
+    {
+      state: "West Bengal",
+      contacts: [
+        { number: "1091", description: "Police Helpline" },
+        { number: "033-23345255", description: "Women Commission" }
+      ]
+    },
+    {
+      state: "Delhi",
+      contacts: [
+        { number: "011-23379181", description: "Delhi Commission for Women" },
+        { number: "011-24673366", description: "Women Protection Cell" },
+        { number: "10920", description: "Shakti Shalini NGO" }
       ]
     }
   ];
@@ -112,6 +218,14 @@ export default function Helpline() {
         <button className="bg-pink-600 text-white px-8 py-3 rounded-full text-2xl font-semibold shadow-lg hover:bg-pink-700 transition-transform transform hover:scale-110">
           📞 Women Helpline
         </button>
+        <div className="mt-4">
+          <Link
+            to="/"
+            className="inline-block bg-white text-pink-700 border border-pink-500 px-5 py-2 rounded-full text-sm font-medium shadow hover:bg-pink-50 transition"
+          >
+            ← Back to Home
+          </Link>
+        </div>
       </div>
 
       <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8 space-y-6">
@@ -126,9 +240,17 @@ export default function Helpline() {
                 {entry.state}
               </button>
               {expandedIndex === idx && (
-                <ul className="list-disc list-inside text-gray-700 px-6 pb-4">
+                <ul className="list-disc list-inside text-gray-700 px-6 pb-4 space-y-2">
                   {entry.contacts.map((contact, i) => (
-                    <li key={i}>{contact}</li>
+                    <li key={i}>
+                      <span className="font-medium">{contact.description}: </span>
+                      <a
+                        href={`tel:${contact.number.replace(/[^0-9]/g, "")}`}
+                        className="text-blue-700 hover:underline"
+                      >
+                        {contact.number}
+                      </a>
+                    </li>
                   ))}
                 </ul>
               )}

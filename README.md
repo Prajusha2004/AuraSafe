@@ -143,5 +143,3 @@ AuraSafe is designed to assist with personal safety but should not replace offic
 For support and questions, please contact [support@aurasafe.com](mailto:support@aurasafe.com)
 
 ---
-
-Built with ❤️ for safer communities worldwide.

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import Link from "next";
+import React, { useState } from "react";
 
 interface HelplineEntry {
   state: string;
@@ -7,27 +6,7 @@ interface HelplineEntry {
 }
 
 export default function Helpline() {
-  const [eyePos, setEyePos] = useState({ x: 0, y: 0 });
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const eyeRef = useRef<HTMLDivElement>(null);
-  const handRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const eye = eyeRef.current;
-      if (!eye) return;
-      const rect = eye.getBoundingClientRect();
-      const eyeX = rect.left + rect.width / 2;
-      const eyeY = rect.top + rect.height / 2;
-      const dx = e.clientX - eyeX;
-      const dy = e.clientY - eyeY;
-      const angle = Math.atan2(dy, dx);
-      const radius = 5;
-      setEyePos({ x: radius * Math.cos(angle), y: radius * Math.sin(angle) });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   const helplineData: HelplineEntry[] = [
     {
@@ -48,7 +27,79 @@ export default function Helpline() {
         "Hyderabad Women Police Station: 040-27852400 / 4852"
       ]
     },
-    // Add more entries as needed with proper types
+    {
+      state: "Maharashtra",
+      contacts: [
+        "Mumbai Women Police Station: 022-22621855",
+        "State Commission for Women: 022-22031152",
+        "Aastha Parivaar Helpline: 18002000445",
+        "Navi Mumbai Women Police Station: 022-27572229"
+      ]
+    },
+    {
+      state: "Tamil Nadu",
+      contacts: [
+        "Chennai Women Helpline: 1091",
+        "Women Help Desk (Police): 044-23452365",
+        "Tamil Nadu State Commission for Women: 044-28270194"
+      ]
+    },
+    {
+      state: "Karnataka",
+      contacts: [
+        "Bangalore Women Police Station: 080-22943225",
+        "Karnataka State Commission for Women: 080-22392223",
+        "Vanitha Sahayavani Helpline: 080-22943225"
+      ]
+    },
+    {
+      state: "West Bengal",
+      contacts: [
+        "Kolkata Women Police: 033-22143230",
+        "West Bengal Commission for Women: 033-23345255",
+        "Kolkata Helpline: 1091 / 100"
+      ]
+    },
+    {
+      state: "Rajasthan",
+      contacts: [
+        "Jaipur Women Police Station: 0141-2560197",
+        "Rajasthan State Women Commission: 0141-2740637",
+        "Emergency Helpline: 1091"
+      ]
+    },
+    {
+      state: "Uttar Pradesh",
+      contacts: [
+        "Women Power Line: 1090",
+        "Lucknow Women Police Station: 0522-2617924",
+        "State Women Commission: 0522-2236496"
+      ]
+    },
+    {
+      state: "Kerala",
+      contacts: [
+        "Thiruvananthapuram Women Police Station: 0471-2338100",
+        "Vanitha Cell: 0471-2444444",
+        "State Women Commission: 0471-2322590"
+      ]
+    },
+    {
+      state: "Jharkhand",
+      contacts: [
+        "Ranchi Women Police Station: 0651-2214007",
+        "State Women Commission: 0651-2446075",
+        "Women Helpline: 181"
+      ]
+    },
+    {
+      state: "Bihar",
+      contacts: [
+        "Patna Women Police Station: 0612-2201977",
+        "State Women Commission: 0612-2507870",
+        "Women Helpline: 181"
+      ]
+    }
   ];
 
   const toggleExpand = (idx: number) => {
@@ -57,47 +108,19 @@ export default function Helpline() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 to-pink-300 p-8 font-sans">
-      <div className="mb-12 text-center relative">
-        <div className="inline-block relative group">
-          <button className="bg-pink-600 text-white px-6 py-3 rounded-full text-xl shadow-lg hover:bg-pink-700 transition-all relative z-10">
-            📞 Women Helpline
-          </button>
-
-          <div className="absolute -top-40 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 z-0">
-            <div className="relative w-28 h-40">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-28 bg-pink-700 rounded-t-full z-0"></div>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-32 bg-pink-300 rounded-full shadow-md z-10 flex justify-center items-start pt-8">
-                <div className="relative flex gap-6">
-                  <div className="w-5 h-5 bg-white rounded-full overflow-hidden" ref={eyeRef}>
-                    <div
-                      className="w-2 h-2 bg-black rounded-full"
-                      style={{ transform: `translate(${eyePos.x}px, ${eyePos.y}px)` }}
-                    ></div>
-                  </div>
-                  <div className="w-5 h-5 bg-white rounded-full overflow-hidden">
-                    <div
-                      className="w-2 h-2 bg-black rounded-full"
-                      style={{ transform: `translate(${eyePos.x}px, ${eyePos.y}px)` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-              <div
-                ref={handRef}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-12 bg-white rounded-full origin-bottom animate-waving-hand z-20 border border-gray-300"
-              ></div>
-            </div>
-          </div>
-        </div>
+      <div className="text-center mb-10">
+        <button className="bg-pink-600 text-white px-8 py-3 rounded-full text-2xl font-semibold shadow-lg hover:bg-pink-700 transition-transform transform hover:scale-110">
+          📞 Women Helpline
+        </button>
       </div>
 
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8 space-y-6">
-        <h1 className="text-3xl font-bold text-pink-800 mb-6">State-Wise Women Helpline Numbers</h1>
+      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8 space-y-6">
+        <h1 className="text-4xl font-bold text-pink-800 mb-6 text-center">State-Wise Women Helpline Numbers</h1>
         <div className="space-y-4 overflow-y-scroll max-h-[70vh] pr-2">
           {helplineData.map((entry, idx) => (
-            <div key={idx} className="border border-pink-300 rounded-lg transition-all">
+            <div key={idx} className="border border-pink-300 rounded-lg transition-all bg-pink-50 hover:shadow-md">
               <button
-                className="w-full text-left text-lg font-semibold text-pink-700 px-4 py-2 focus:outline-none hover:bg-pink-50"
+                className="w-full text-left text-lg font-semibold text-pink-800 px-4 py-3 focus:outline-none hover:bg-pink-100"
                 onClick={() => toggleExpand(idx)}
               >
                 {entry.state}
@@ -113,20 +136,6 @@ export default function Helpline() {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes wave {
-          0% { transform: rotate(0deg); }
-          20% { transform: rotate(15deg); }
-          40% { transform: rotate(-10deg); }
-          60% { transform: rotate(15deg); }
-          80% { transform: rotate(-10deg); }
-          100% { transform: rotate(0deg); }
-        }
-        .animate-waving-hand {
-          animation: wave 1.5s infinite;
-        }
-      `}</style>
     </div>
   );
 }

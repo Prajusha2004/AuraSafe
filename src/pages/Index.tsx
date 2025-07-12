@@ -4,12 +4,23 @@ import { FeaturesSection } from "@/components/FeaturesSection";
 import { SafetyDashboard } from "@/components/SafetyDashboard";
 import { MapSection } from "@/components/MapSection";
 import { Footer } from "@/components/Footer";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
       <HeroSection />
+
+      {/* 📞 Women Helpline Button */}
+      <div className="flex justify-center mt-6">
+        <Link to="/helpline">
+          <button className="bg-pink-600 text-white px-6 py-3 rounded-full text-xl shadow-lg hover:bg-pink-700 transition-all">
+            📞 Women Helpline
+          </button>
+        </Link>
+      </div>
+
       <FeaturesSection />
       <MapSection />
       <SafetyDashboard />

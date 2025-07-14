@@ -11,65 +11,69 @@ export default function Helpline() {
 
   const helplineData: HelplineEntry[] = [
     {
+      state: "Andaman and Nicobar Islands",
+      contacts: [
+        { number: "03192-232102", description: "Women Helpline" },
+        { number: "112", description: "Emergency Number" },
+      ],
+    },
+    {
       state: "Andhra Pradesh",
       contacts: [
-        { number: "181", description: "24x7 Women Helpline" },
-        { number: "0863-2329090", description: "State Women Commission" },
+        { number: "181", description: "Women Helpline" },
+        { number: "100", description: "Police Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Arunachal Pradesh",
       contacts: [
-        { number: "0360-2214745", description: "Women Police Helpline" },
+        { number: "0360-2214745", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Assam",
       contacts: [
-        { number: "181", description: "24x7 Women Helpline" },
-        { number: "0361-2600060", description: "Women Commission" },
+        { number: "181", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Bihar",
       contacts: [
-        { number: "181", description: "24x7 Women Helpline" },
-        { number: "0612-2507870", description: "Women Commission" },
+        { number: "0612-2215400", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Chhattisgarh",
       contacts: [
-        { number: "181", description: "Women Helpline" },
-        { number: "0771-2511515", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Goa",
       contacts: [
-        { number: "1091", description: "Police Helpline" },
-        { number: "0832-2425100", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "0832-2424001", description: "Police Control Room" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Gujarat",
       contacts: [
-        { number: "1091", description: "Police Helpline" },
-        { number: "079-23251604", description: "State Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "181", description: "Abhayam Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Haryana",
       contacts: [
-        { number: "1091", description: "Police Helpline" },
-        { number: "0172-2587900", description: "State Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "100", description: "Police Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
@@ -77,75 +81,73 @@ export default function Helpline() {
       state: "Himachal Pradesh",
       contacts: [
         { number: "1091", description: "Women Helpline" },
-        { number: "0177-2626487", description: "Women Commission" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Jharkhand",
       contacts: [
-        { number: "181", description: "Women Helpline" },
-        { number: "0651-2446075", description: "Women Commission" },
+        { number: "0651-6453840", description: "Women Helpline" },
+        { number: "181", description: "One Stop Centre" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Karnataka",
       contacts: [
-        { number: "080-22943225", description: "Women Helpline" },
-        { number: "080-22392223", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "080-22943225", description: "Police Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Kerala",
       contacts: [
-        { number: "181", description: "Women Helpline" },
-        { number: "0471-2338100", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Madhya Pradesh",
       contacts: [
-        { number: "181", description: "Women Helpline" },
-        { number: "0755-2550900", description: "Women Commission" },
+        { number: "1090", description: "Women Helpline" },
+        { number: "181", description: "One Stop Centre" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Maharashtra",
       contacts: [
-        { number: "18002000445", description: "Women Helpline" },
-        { number: "022-22621855", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "022-22633333", description: "Mumbai Police" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Manipur",
       contacts: [
-        { number: "0385-2450008", description: "Women Helpline" },
+        { number: "0385-2450214", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Meghalaya",
       contacts: [
-        { number: "0364-2503661", description: "Women Helpline" },
+        { number: "0364-2502098", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Mizoram",
       contacts: [
-        { number: "0389-2336848", description: "Women Helpline" },
+        { number: "0389-2334682", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Nagaland",
       contacts: [
-        { number: "0370-2244326", description: "Women Helpline" },
+        { number: "0370-2244320", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
@@ -153,15 +155,14 @@ export default function Helpline() {
       state: "Odisha",
       contacts: [
         { number: "181", description: "Women Helpline" },
-        { number: "0674-2598200", description: "Women Commission" },
+        { number: "100", description: "Police Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Punjab",
       contacts: [
-        { number: "1091", description: "Police Helpline" },
-        { number: "0172-2740678", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
@@ -169,72 +170,104 @@ export default function Helpline() {
       state: "Rajasthan",
       contacts: [
         { number: "1091", description: "Women Helpline" },
-        { number: "0141-2740637", description: "Women Commission" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Sikkim",
       contacts: [
-        { number: "03592-202890", description: "Women Helpline" },
+        { number: "03592-202666", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Tamil Nadu",
       contacts: [
-        { number: "1091", description: "Police Helpline" },
-        { number: "044-28270194", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "044-28592750", description: "Police Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Telangana",
       contacts: [
-        { number: "040-27853508", description: "Women Helpline" },
-        { number: "1091", description: "Police Helpline" },
+        { number: "1091", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Tripura",
       contacts: [
-        { number: "0381-2323423", description: "Women Helpline" },
+        { number: "0381-2324123", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Uttar Pradesh",
       contacts: [
-        { number: "1090", description: "Women Helpline" },
-        { number: "0522-2617924", description: "Women Commission" },
+        { number: "1090", description: "Women Power Line" },
+        { number: "181", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "Uttarakhand",
       contacts: [
-        { number: "0135-2700969", description: "Women Helpline" },
+        { number: "1090", description: "Women Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
       state: "West Bengal",
       contacts: [
-        { number: "1091", description: "Police Helpline" },
-        { number: "033-23345255", description: "Women Commission" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "100", description: "Police Helpline" },
         { number: "112", description: "Emergency Number" },
       ],
     },
     {
-      state: "Delhi",
+      state: "Chandigarh",
       contacts: [
-        { number: "011-23379181", description: "Delhi Commission for Women" },
-        { number: "011-24673366", description: "Women Protection Cell" },
-        { number: "10920", description: "Shakti Shalini NGO" },
+        { number: "1091", description: "Women Helpline" },
+        { number: "0172-2741900", description: "Women Commission" },
         { number: "112", description: "Emergency Number" },
       ],
     },
+    {
+      state: "Dadra and Nagar Haveli and Daman and Diu",
+      contacts: [
+        { number: "0260-2642106", description: "Women Helpline" },
+        { number: "112", description: "Emergency Number" },
+      ],
+    },
+    {
+      state: "Jammu and Kashmir",
+      contacts: [
+        { number: "0191-2472257", description: "Women Helpline" },
+        { number: "112", description: "Emergency Number" },
+      ],
+    },
+    {
+      state: "Ladakh",
+      contacts: [
+        { number: "01982-255567", description: "Women Helpline" },
+        { number: "112", description: "Emergency Number" },
+      ],
+    },
+    {
+      state: "Lakshadweep",
+      contacts: [
+        { number: "04896-262236", description: "Women Helpline" },
+        { number: "112", description: "Emergency Number" },
+      ],
+    },
+    {
+      state: "Puducherry",
+      contacts: [
+        { number: "0413-2331555", description: "Women Helpline" },
+        { number: "112", description: "Emergency Number" },
+      ],
+    }
   ];
 
   const toggleExpand = (idx: number) => {
@@ -242,12 +275,12 @@ export default function Helpline() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-red-900 p-8 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 to-emerald-300 p-8 font-sans">
       <div className="text-center mb-10">
         <div className="mt-4">
           <Link
             to="/"
-            className="inline-block bg-white text-red-700 border border-red-500 px-5 py-2 rounded-full text-sm font-medium shadow hover:bg-red-100 transition"
+            className="inline-block bg-white text-emerald-700 border border-emerald-500 px-5 py-2 rounded-full text-sm font-medium shadow hover:bg-emerald-50 transition"
           >
             ← Back to Home
           </Link>
@@ -255,17 +288,17 @@ export default function Helpline() {
       </div>
 
       <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8 space-y-6">
-        <h1 className="text-4xl font-bold text-red-800 mb-6 text-center">
+        <h1 className="text-4xl font-bold text-emerald-800 mb-6 text-center">
           State-Wise Women Helpline Numbers
         </h1>
         <div className="space-y-4 overflow-y-scroll max-h-[70vh] pr-2">
           {helplineData.map((entry, idx) => (
             <div
               key={idx}
-              className="border border-red-300 rounded-lg transition-all bg-red-50 hover:shadow-md"
+              className="border border-emerald-300 rounded-lg transition-all bg-emerald-50 hover:shadow-md"
             >
               <button
-                className="w-full text-left text-lg font-semibold text-red-800 px-4 py-3 focus:outline-none hover:bg-red-100"
+                className="w-full text-left text-lg font-semibold text-emerald-800 px-4 py-3 focus:outline-none hover:bg-emerald-100"
                 onClick={() => toggleExpand(idx)}
               >
                 {entry.state}

@@ -15,7 +15,8 @@ const Index = () => {
       {/* 📞 Women Helpline Button */}
       <div className="flex justify-center mt-6">
         <Link to="/helpline">
-          <button className="bg-pink-600 text-white px-6 py-3 rounded-full text-xl shadow-lg hover:bg-pink-700 transition-all">
+          <button className="bg-emerald-600 hover:bg-emerald-700
+ text-white px-6 py-3 rounded-full text-xl shadow-lg transition-all">
             📞 Women Helpline
           </button>
         </Link>

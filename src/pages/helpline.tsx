@@ -242,13 +242,12 @@ export default function Helpline() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-pink-300 p-8 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-black to-red-900 p-8 font-sans">
       <div className="text-center mb-10">
-        {/* Removed the Women Helpline button here per your request */}
         <div className="mt-4">
           <Link
             to="/"
-            className="inline-block bg-white text-pink-700 border border-pink-500 px-5 py-2 rounded-full text-sm font-medium shadow hover:bg-pink-50 transition"
+            className="inline-block bg-white text-red-700 border border-red-500 px-5 py-2 rounded-full text-sm font-medium shadow hover:bg-red-100 transition"
           >
             ← Back to Home
           </Link>
@@ -256,17 +255,17 @@ export default function Helpline() {
       </div>
 
       <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8 space-y-6">
-        <h1 className="text-4xl font-bold text-pink-800 mb-6 text-center">
+        <h1 className="text-4xl font-bold text-red-800 mb-6 text-center">
           State-Wise Women Helpline Numbers
         </h1>
         <div className="space-y-4 overflow-y-scroll max-h-[70vh] pr-2">
           {helplineData.map((entry, idx) => (
             <div
               key={idx}
-              className="border border-pink-300 rounded-lg transition-all bg-pink-50 hover:shadow-md"
+              className="border border-red-300 rounded-lg transition-all bg-red-50 hover:shadow-md"
             >
               <button
-                className="w-full text-left text-lg font-semibold text-pink-800 px-4 py-3 focus:outline-none hover:bg-pink-100"
+                className="w-full text-left text-lg font-semibold text-red-800 px-4 py-3 focus:outline-none hover:bg-red-100"
                 onClick={() => toggleExpand(idx)}
               >
                 {entry.state}

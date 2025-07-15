@@ -5,8 +5,9 @@ import { AIChatInterface } from "./AIChatInterface";
 import { TrustNetwork } from "./TrustNetwork";
 import { LogoIcon } from "./LogoIcon";
 import { Shield, MessageSquare, Users, X } from "lucide-react";
-// eslint-disable-next-line no-useless-escape
-import heroImage from "src\assets\women-awareness-bg.jpg"; // ✅ New image
+ 
+import heroImage from "@/assets/women-awareness-bg.jpg";
+ // ✅ New image
 
 export function HeroSection() {
   const [showChat, setShowChat] = useState(false);

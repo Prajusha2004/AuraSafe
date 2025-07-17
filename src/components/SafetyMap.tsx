@@ -68,11 +68,17 @@ export function SafetyMap() {
           setError('Failed to load map tiles');
           setIsLoading(false);
         });
+
+      setTimeout(() => {
+        map.current?.invalidateSize();
+      }, 500);
     }
 
     if (map.current) {
       map.current.eachLayer((layer: L.Layer) => {
-        if ((layer as L.Marker).getLatLng) map.current!.removeLayer(layer);
+        if (layer instanceof L.Marker) {
+          map.current!.removeLayer(layer);
+        }
       });
 
       const createCustomIcon = (color: string, symbol: string): L.DivIcon =>
@@ -107,10 +113,6 @@ export function SafetyMap() {
           .addTo(map.current!)
           .bindPopup(`${zone.name} (Caution)`);
       });
-
-      setTimeout(() => {
-        map.current?.invalidateSize();
-      }, 200);
     }
   };
 
@@ -172,7 +174,7 @@ export function SafetyMap() {
 
   return (
     <div className="relative w-full h-96 rounded-lg overflow-hidden bg-card">
-      <div ref={mapContainer} className="absolute inset-0" />
+      <div ref={mapContainer} className="absolute inset-0 h-full w-full z-0" />
 
       <div className="absolute top-4 left-4 space-y-2">
         <Button
